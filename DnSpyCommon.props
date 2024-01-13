@@ -6,7 +6,7 @@
         - .github/workflows/build.yml
         - DnSpyRoslyn.props
     NOTE: Update the ABOVE files when TargetFrameworks is updated -->
-    <TargetFrameworks>net48;net8.0-windows</TargetFrameworks>
+    <TargetFrameworks>net481;net8.0-windows</TargetFrameworks>
     <IsDotNetFramework>false</IsDotNetFramework>
     <IsDotNet>false</IsDotNet>
     <IsSelfContainedDotNet>false</IsSelfContainedDotNet>
@@ -21,7 +21,7 @@
     <!-- Make sure we don't have to publish each extension to get all their refs -->
     <CopyLocalLockFileAssemblies Condition=" '$(IsDotNet)' == 'true' ">true</CopyLocalLockFileAssemblies>
     <!-- If this gets updated, also update .github/workflows/build.yml and build.ps1 -->
-    <DnSpyRuntimeIdentifiers>win-x86;win-x64</DnSpyRuntimeIdentifiers>
+    <DnSpyRuntimeIdentifiers>win-x86;win-x64;win-arm64</DnSpyRuntimeIdentifiers>
     <SatelliteResourceLanguages>cs;de;es;es-ES;fa;fr;hu;it;pt-BR;pt-PT;ru;tr;uk;zh-CN;vi</SatelliteResourceLanguages>
 
     <!-- Allow compiling for windows on non-windows platforms -->

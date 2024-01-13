@@ -21,10 +21,12 @@
     <GarbageFile Include="SQLitePCLRaw.core.dll" />
     <GarbageFile Include="SQLitePCLRaw.provider.e_sqlite3.dll" />
     <GarbageFile Include="e_sqlite3.dll" />
+    <GarbageFile Include="arm64\e_sqlite3.dll" />
     <GarbageFile Include="x64\e_sqlite3.dll" />
     <GarbageFile Include="x86\e_sqlite3.dll" />
     <GarbageDir Include="x86" />
     <GarbageDir Include="x64" />
+    <GarbageDir Include="arm64" />
     <GarbageDir Include="ja" />
     <GarbageDir Include="ko" />
     <GarbageDir Include="pl" />

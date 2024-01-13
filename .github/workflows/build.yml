@@ -20,17 +20,20 @@ jobs:
           shell: pwsh
     strategy:
       matrix:
-        platform: [netframework, net-x86, net-x64]
+        platform: [netframework, net-x86, net-x64, net-arm64]
         include:
           - platform: netframework
             package-name: netframework
-            build-dir: net48
+            build-dir: net481
           - platform: net-x86
             package-name: net-win32
             build-dir: net8.0-windows\win-x86\publish
           - platform: net-x64
             package-name: net-win64
             build-dir: net8.0-windows\win-x64\publish
+          - platform: net-arm64
+            package-name: net-winarm64
+            build-dir: net8.0-windows\win-arm64\publish
 
     steps:
       - uses: actions/checkout@v4.1.1

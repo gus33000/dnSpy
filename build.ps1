@@ -1,11 +1,11 @@
 param(
-	[ValidateSet("all","netframework","net-x86","net-x64")]
+	[ValidateSet("all","netframework","net-x86","net-x64","net-arm64")]
 	[string]$buildtfm = 'all',
 	[switch]$NoMsbuild
 	)
 $ErrorActionPreference = 'Stop'
 
-$netframework_tfm = 'net48'
+$netframework_tfm = 'net481'
 $net_tfm = 'net8.0-windows'
 $configuration = 'Release'
 $net_baseoutput = "dnSpy\dnSpy\bin\$configuration"
@@ -16,7 +16,7 @@ $apphostpatcher_dir = "Build\AppHostPatcher"
 #
 
 function Build-NetFramework {
-	Write-Host 'Building .NET Framework x86 and x64 binaries'
+	Write-Host 'Building .NET Framework x86, x64 and arm64 binaries'
 
 	$outdir = "$net_baseoutput\$netframework_tfm"
 
@@ -34,6 +34,7 @@ function Build-NetFramework {
 	New-Item -ItemType Directory $outdir > $null
 	Move-Item $net_baseoutput\bin $outdir
 	foreach ($filename in 'dnSpy-x86.exe', 'dnSpy-x86.exe.config', 'dnSpy-x86.pdb',
+			 'dnSpy-arm64.exe', 'dnSpy-arm64.exe.config', 'dnSpy-arm64.pdb',
 			 'dnSpy.exe', 'dnSpy.exe.config', 'dnSpy.pdb',
 			 'dnSpy.Console.exe', 'dnSpy.Console.exe.config', 'dnSpy.Console.pdb') {
 		Move-Item $outdir\bin\$filename $outdir
@@ -71,11 +72,12 @@ function Build-Net {
 	}
 }
 
-$buildNet	 = $buildtfm -eq 'all' -or $buildtfm -eq 'netframework'
-$buildNetX86 = $buildtfm -eq 'all' -or $buildtfm -eq 'net-x86'
-$buildNetX64 = $buildtfm -eq 'all' -or $buildtfm -eq 'net-x64'
+$buildNet	   = $buildtfm -eq 'all' -or $buildtfm -eq 'netframework'
+$buildNetX86   = $buildtfm -eq 'all' -or $buildtfm -eq 'net-x86'
+$buildNetX64   = $buildtfm -eq 'all' -or $buildtfm -eq 'net-x64'
+$buildNetARM64 = $buildtfm -eq 'all' -or $buildtfm -eq 'net-arm64'
 
-if ($buildNetX86 -or $buildNetX64) {
+if ($buildNetX86 -or $buildNetX64 -or $buildNetARM64) {
 	if ($NoMsbuild) {
 		dotnet build -v:m -c $configuration -f $netframework_tfm $apphostpatcher_dir\AppHostPatcher.csproj
 		if ($LASTEXITCODE) { exit $LASTEXITCODE }
@@ -96,4 +98,8 @@ if ($buildNetX86) {
 
 if ($buildNetX64) {
 	Build-Net x64
+}
+
+if ($buildNetARM64) {
+	Build-Net arm64
 }
